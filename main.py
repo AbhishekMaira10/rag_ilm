@@ -382,6 +382,18 @@ rag_data = {
 }
 
 
+def normalize_key(filename):
+    """
+    Normalize the filename to a standard format.
+    This example removes any trailing ' (number).pdf' and keeps it as 'filename.pdf'.
+    Adjust the logic as needed to match your specific normalization rules.
+    """
+    import re
+    # Regular expression to match ' (number)' before the '.pdf' and remove it
+    normalized_filename = re.sub(r" \(\d+\)(?=.pdf$)", "", filename)
+    return normalized_filename
+
+
 @app.get("/hi")
 async def hi():
     return {"message": "Hi"}
@@ -389,7 +401,8 @@ async def hi():
 
 @app.get("/get-rag-data")
 async def get_rag_data(file_name: str):
-    file_data = rag_data.get(file_name)
+    normalized_key = normalize_key(file_name)
+    file_data = rag_data.get(normalized_key)
     if file_data is None:
         return {"error": "File name not found."}
     return {"data": file_data}
