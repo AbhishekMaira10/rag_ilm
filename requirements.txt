@@ -3,5 +3,3 @@ uvicorn==0.20.0
 RAGatouille==0.0.8.post1
 langchain-text-splitters==0.0.1
 requests
-json
-uuid
